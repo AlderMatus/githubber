@@ -1,0 +1,32 @@
+<div class="container-fluid ">
+  <h3>Github Users</h3>
+</div>
+<div class="row">
+  <div *ngIf="page>0" class="col col-sm-1 float-lg-right">
+    <button class="btn btn-outline-primary" ngbButton (click)="movePage('prev')"><fa-icon [icon]="faArrowCircleLeft"></fa-icon></button>
+  </div>
+  <div class="col col-sm-10">
+    <div class="row row-cols-1 row-cols-sm-5">
+      <div *ngFor="let user of users | async" class="col mb-2">
+        <div class="card">
+          <img [src]="user.avatar_url" class="card-img" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{user?.login}}</h5>
+            <div *ngIf="user?.info | async as userInfo">
+              <p class="card-text" *ngIf="userInfo.name"><b>Name: </b>{{userInfo.name}}</p>
+              <p class="card-text" *ngIf="userInfo.location"><b>Location: </b>{{userInfo.location}}</p>
+              <p class="card-text" *ngIf="userInfo.bio"><b>Bio: </b>{{userInfo.bio}}</p>
+              <p class="card-text"><b>Following: </b>{{userInfo.following}}</p>
+              <p class="card-text"><b>Followers: </b>{{userInfo.followers}}</p>
+              <p class="card-text"><b>Public Repos: </b>{{userInfo.public_repos}}</p>
+              <p class="card-text"><small class="text-muted"><a [href]="userInfo.html_url">GH Profile</a> - <a [routerLink]="['/users', userInfo.login, 'repos']">repositories</a></small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-sm-1 float-lg-right">
+    <button class="btn btn-outline-primary" ngbButton (click)="movePage('next')"><fa-icon [icon]="faArrowCircleRight"></fa-icon></button>
+  </div>
+</div>
